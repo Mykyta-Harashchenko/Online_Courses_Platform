@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Django Website{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app_auth/style.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Welcome to My Website</h1>
+    </header>
+
+    <!-- Main content block that other templates can extend -->
+    <main>
+        {% block content %}
+        <p>This is the default content. Override this block in other templates.</p>
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 My Django Website</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'app_auth/base.html' %}
+
+{% block title %}Home - My Django Website{% endblock %}
+
+{% block content %}
+    <div>
+        <h2>Welcome to the Home Page!</h2>
+
+        <!-- Проверяем, аутентифицирован ли пользователь -->
+        {% if user.is_authenticated %}
+            <p>Hello, {{ user.username }}!</p>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        {% else %}
+          <ul class="nav">
+            <li class="nav-item">
+                <a class="btn btn-outline-primary me-2" href="{% url 'app_auth:register' %}">Sign Up</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-outline-primary" href="{% url 'app_auth:signin' %}">Login</a>
+            </li>
+          </ul>
+
+        {% endif %}
+    </div>
+{% endblock %}
