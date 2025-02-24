@@ -7,4 +7,4 @@ urlpatterns = [
     path('', include('app_auth.urls')),
     path('warrior/', include('warrior.urls', namespace='warrior')),
     path('admin/', admin.site.urls),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,6 +6,7 @@ from django.contrib import messages
 
 
 from .forms import RegisterForm, ProfileForm
+from .models import Profile
 
 
 def main(request):
@@ -31,6 +32,9 @@ class RegisterView(View):
 
 @login_required
 def profile(request):
+    if not hasattr(request.user, 'profile'):
+        Profile.objects.create(user=request.user)
+
     if request.method == 'POST':
         profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if profile_form.is_valid():

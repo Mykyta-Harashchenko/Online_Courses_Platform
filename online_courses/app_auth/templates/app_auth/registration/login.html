@@ -33,7 +33,7 @@
             <span>{{form.errors.password}}</span>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="reset" class="btn btn-secondary">Reset</button>
+        <p><a href="{% url 'app_auth:password_reset' %}">Forgot your password?</a></p>
     </form>
 </div>
 {% endblock %}

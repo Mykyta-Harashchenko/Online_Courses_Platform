@@ -13,6 +13,10 @@
                 {% csrf_token %}
                 <button type="submit">Logout</button>
             </form>
+            <form method="POST" action="{% url 'app_auth:profile' %}">
+                {% csrf_token %}
+                <button type="submit">Profile</button>
+            </form>
             <form method="POST" action="{% url 'warrior:add_warrior' %}">
                 {% csrf_token %}
                 <button type="submit">Add Warrior</button>
