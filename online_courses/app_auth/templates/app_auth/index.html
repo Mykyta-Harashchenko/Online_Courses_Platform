@@ -9,9 +9,13 @@
         <!-- Проверяем, аутентифицирован ли пользователь -->
         {% if user.is_authenticated %}
             <p>Hello, {{ user.username }}!</p>
-            <form method="POST" action="{% url 'logout' %}">
+            <form method="POST" action="{% url 'app_auth:logout' %}">
                 {% csrf_token %}
                 <button type="submit">Logout</button>
+            </form>
+            <form method="POST" action="{% url 'warrior:add_warrior' %}">
+                {% csrf_token %}
+                <button type="submit">Add Warrior</button>
             </form>
         {% else %}
           <ul class="nav">
