@@ -22,3 +22,10 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+class ProfileForm(ModelForm):
+    avatar = ImageField(widget=FileInput())
+
+    class Meta:
+        model = Profile
+        fields = ['avatar']
