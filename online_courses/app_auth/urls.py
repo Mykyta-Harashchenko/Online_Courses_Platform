@@ -9,6 +9,7 @@ app_name = 'app_auth'
 
 urlpatterns = [
     path('', views.main, name='root'),
+    path('<int:page>', views.main, name='root_paginate'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('signin/', LoginView.as_view(template_name='app_auth/registration/login.html', form_class=LoginForm), name='signin'),
     path('logout/', views.logoutuser, name='logout'),

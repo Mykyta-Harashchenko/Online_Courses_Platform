@@ -1,5 +1,6 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
@@ -7,10 +8,16 @@ from django.contrib import messages
 
 from .forms import RegisterForm, ProfileForm
 from .models import Profile
+from warrior.models import Warrior
 
 
-def main(request):
-    return render(request, 'app_auth/index.html')
+def main(request, page=1):
+    warriors = Warrior.objects.all().order_by('first_name')
+    paginator = Paginator(warriors, 10)
+    warriors_page = paginator.get_page(page)
+    return render(request, 'app_auth/index.html', {'warriors': warriors_page})
+
+
 
 class RegisterView(View):
     template_name = 'app_auth/registration/register.html'

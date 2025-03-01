@@ -3,34 +3,80 @@
 {% block title %}Home - My Django Website{% endblock %}
 
 {% block content %}
-    <div>
-        <h2>Welcome to the Home Page!</h2>
+    <div class="container">
+        <h2 class="text-center my-4">Welcome to the Home Page!</h2>
 
-        <!-- Проверяем, аутентифицирован ли пользователь -->
         {% if user.is_authenticated %}
-            <p>Hello, {{ user.username }}!</p>
-            <form method="POST" action="{% url 'app_auth:logout' %}">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
-            <form method="POST" action="{% url 'app_auth:profile' %}">
-                {% csrf_token %}
-                <button type="submit">Profile</button>
-            </form>
-            <form method="POST" action="{% url 'warrior:add_warrior' %}">
-                {% csrf_token %}
-                <button type="submit">Add Warrior</button>
-            </form>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="mb-0">Hello, <strong>{{ user.username }}</strong>!</p>
+                <div>
+                    <form method="POST" action="{% url 'app_auth:logout' %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                    <a href="{% url 'app_auth:profile' %}" class="btn btn-primary">Profile</a>
+                    <a href="{% url 'warrior:add_warrior' %}" class="btn btn-success">Add Warrior</a>
+                </div>
+            </div>
         {% else %}
-          <ul class="nav">
-            <li class="nav-item">
-                <a class="btn btn-outline-primary me-2" href="{% url 'app_auth:register' %}">Sign Up</a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-outline-primary" href="{% url 'app_auth:signin' %}">Login</a>
-            </li>
-          </ul>
+          <div class="text-center mb-4">
+            <a class="btn btn-outline-primary me-2" href="{% url 'app_auth:register' %}">Sign Up</a>
+            <a class="btn btn-outline-primary" href="{% url 'app_auth:signin' %}">Login</a>
+          </div>
+        {% endif %}
 
+        <!-- Список воинов -->
+        <div class="row">
+    {% for warrior in warriors %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center">
+                <!-- Отображение аватара -->
+                {% if warrior.avatar %}
+                    <img src="{{ warrior.avatar.url }}" alt="{{ warrior.first_name }} {{ warrior.last_name }}" class="rounded-circle mb-3" width="80" height="80">
+                {% else %}
+                    <img src="/media/default_avatar.png" alt="Default Avatar" class="rounded-circle mb-3" width="80" height="80">
+                {% endif %}
+
+                <h5 class="card-title mb-1">{{ warrior.first_name }} {{ warrior.last_name }}</h5>
+                <p class="text-muted mb-2">by {{ warrior.user.username }}</p>
+
+                <!-- Биография -->
+                <p class="text-dark"><strong>War nik:</strong> {{ warrior.war_nik }}</p>
+
+                <!-- Навыки -->
+                <p class="text-dark"><strong>Wound type:</strong> {{ warrior.wound_type }}</p>
+
+                <!-- Опыт -->
+                <p class="text-dark"><strong>Wound case:</strong> {{ warrior.wound_case }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+        <!-- Пагинация -->
+        {% if warriors.has_other_pages %}
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if warriors.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url 'warrior:root_paginate' warriors.previous_page_number %}">← Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">← Previous</span></li>
+                {% endif %}
+
+                {% if warriors.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url 'warrior:root_paginate' warriors.next_page_number %}">Next →</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Next →</span></li>
+                {% endif %}
+            </ul>
+        </nav>
         {% endif %}
     </div>
 {% endblock %}
