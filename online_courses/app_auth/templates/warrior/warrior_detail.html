@@ -1,0 +1,45 @@
+{% extends 'app_auth/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="row">
+                <!-- Левая часть с фото -->
+                <div class="col-md-4 text-center">
+                    {% if warrior.avatar %}
+                        <img src="{{ warrior.avatar.url }}" alt="{{ warrior.first_name }} {{ warrior.second_name }}" class="img-fluid rounded mb-3">
+                    {% else %}
+                        <img src="/media/default_avatar.png" alt="Default Avatar" class="img-fluid rounded mb-3">
+                    {% endif %}
+                </div>
+
+                <!-- Правая часть с информацией -->
+                <div class="col-md-8">
+                    <h2 class="card-title">{{ warrior.first_name }} {{ warrior.second_name }}</h2>
+                    <h4 class="text-muted">Nickname: {{ warrior.war_nik }}</h4>
+
+                    <hr>
+
+                    <h5 class="fw-bold">Wound Type:</h5>
+                    <p>{{ warrior.wound_type }}</p>
+
+                    <h5 class="fw-bold">Wound Case:</h5>
+                    <p>{{ warrior.wound_case }}</p>
+
+                    <h5 class="fw-bold">Wound location:</h5>
+                    <p>{{ warrior.wound_location }}</p>
+
+                    <h5 class="fw-bold">Wound Date:</h5>
+                    <p>{{ warrior.wound_date }}</p>
+
+                    <h5 class="fw-bold">Sum received: {{warrior.sum_raised}} from: {{warrior.sum_amount}}</h5>
+
+                    <hr>
+
+                    <h6 class="text-muted">Added by: {{ warrior.user.username }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
