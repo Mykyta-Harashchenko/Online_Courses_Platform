@@ -6,6 +6,7 @@
     <div class="text-center">
         <h1 class="mb-4">Profile: {{ user.username }}</h1>
         <img src="{{ user.profile.avatar.url }}" alt="User Avatar" class="rounded-circle shadow" width="150" height="150">
+        <a href="{% url 'app_auth:profile_change' %}" class="btn btn-outline-danger btn-sm">Change info</a>
     </div>
 
     {% if messages %}
@@ -16,17 +17,6 @@
     </div>
     {% endif %}
 
-    <form method="post" enctype="multipart/form-data" class="mt-4">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label class="form-label">Change Avatar:</label>
-            {{ profile_form.avatar }}
-            <div class="text-danger">{{ profile_form.errors.avatar }}</div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <button type="reset" class="btn btn-secondary">Reset</button>
-    </form>
 
     <div class="mt-5">
     <h3>Added Warriors</h3>
@@ -44,7 +34,7 @@
                             <p class="text-muted">Nickname: {{ war.war_nik }}</p>
                             <p>Wound Type: {{ war.wound_type }}</p>
                             <p>Wound Case: {{ war.wound_case }}</p>
-                            <a href="{% url 'warrior:warrior_details' war.id %}" class="btn btn-outline-primary btn-sm">More Details</a>
+                            <a href="{% url 'warrior:warrior_details' war.id %}" class="btn btn-outline-danger btn-sm">More Details</a>
                         </div>
                     </div>
                 </div>
