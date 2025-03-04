@@ -2,35 +2,59 @@
 
 {% block content %}
 
-<div>
-    <h1>Profile page: {{user.username}}</h1>
-    <img src="{{ user.profile.avatar.url }}" alt="avatar of user"/>
-</div>
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="mb-4">Profile: {{ user.username }}</h1>
+        <img src="{{ user.profile.avatar.url }}" alt="User Avatar" class="rounded-circle shadow" width="150" height="150">
+    </div>
 
-{% if messages %}
-<div>
-    {% for message in messages %}
-    <div {% if message.tags %} class="alert-{{ message.tags }}" {% endif %}>{{ message }}</div>
-    {% endfor %}
-</div>
-{% endif %}
+    {% if messages %}
+    <div class="mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="form-row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label class="small mb-1">Change Avatar:</label>
-                {{ profile_form.avatar }}
-                <span>{{ profile_form.errors.avatar }}</span>
-            </div>
+    <form method="post" enctype="multipart/form-data" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Change Avatar:</label>
+            {{ profile_form.avatar }}
+            <div class="text-danger">{{ profile_form.errors.avatar }}</div>
         </div>
-    </div>
-    <div class="grid">
-        <button type="submit">Save Changes</button>
-        <button type="reset" class="secondary">Reset</button>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+    </form>
+
+    <div class="mt-5">
+    <h3>Added Warriors</h3>
+
+    {% if warriors %}
+        <div class="row">
+            {% for war in warriors %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            {% if war.avatar %}
+                                <img src="{{ war.avatar.url }}" alt="{{ war.first_name }}" class="rounded img-fluid mb-3">
+                            {% endif %}
+                            <h5 class="card-title">{{ war.first_name }} {{ war.second_name }}</h5>
+                            <p class="text-muted">Nickname: {{ war.war_nik }}</p>
+                            <p>Wound Type: {{ war.wound_type }}</p>
+                            <p>Wound Case: {{ war.wound_case }}</p>
+                            <a href="{% url 'warrior:warrior_details' war.id %}" class="btn btn-outline-primary btn-sm">More Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">You haven't added any warriors yet.</p>
+    {% endif %}
     </div>
 
-</form>
+</div>
 
-{% endblock content %}
+{% endblock %}

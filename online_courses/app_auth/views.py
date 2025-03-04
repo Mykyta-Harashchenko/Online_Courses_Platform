@@ -49,8 +49,9 @@ def profile(request):
             messages.success(request, 'Your profile is updated successfully')
             return redirect(to='app_auth:profile')
 
+    warriors = Warrior.objects.filter(user=request.user)
     profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'app_auth/registration/profile.html', {'profile_form': profile_form})
+    return render(request, 'app_auth/registration/profile.html', {'profile_form': profile_form, 'warriors': warriors})
 
 
 @login_required

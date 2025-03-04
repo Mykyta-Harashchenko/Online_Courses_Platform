@@ -14,8 +14,8 @@
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">Logout</button>
                     </form>
-                    <a href="{% url 'app_auth:profile' %}" class="btn btn-primary">Profile</a>
-                    <a href="{% url 'warrior:add_warrior' %}" class="btn btn-success">Add Warrior</a>
+                    <a href="{% url 'app_auth:profile' %}" class="btn btn-danger">Profile</a>
+                    <a href="{% url 'warrior:add_warrior' %}" class="btn btn-danger">Add Warrior</a>
                 </div>
             </div>
         {% else %}
@@ -49,7 +49,7 @@
 
                 <!-- Опыт -->
                 <p class="text-dark"><strong>Wound case:</strong> {{ warrior.wound_case }}</p>
-                <a href="/warrior/{{ warrior.id }}" class="text-decoration-none">(about)</a>
+                <a href="/warrior/{{ warrior.id }}" class = "btn btn-danger" >(about)</a>
             </div>
         </div>
     </div>
