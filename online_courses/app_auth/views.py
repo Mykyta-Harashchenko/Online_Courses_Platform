@@ -77,6 +77,4 @@ def logoutuser(request):
     logout(request)
     return redirect(to='app_auth:root')
 
-
-
 # Uganda228
