@@ -56,9 +56,8 @@ def profile(request):
 
 @login_required
 def update_profile(request):
-    if not hasattr(request.user, 'profile'):
-        Profile.objects.create(user=request.user)
-    profile = request.user.profile
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
     if request.method == 'POST':
         profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
         if profile_form.is_valid():
@@ -69,6 +68,7 @@ def update_profile(request):
             messages.error(request, 'Please correct the errors below.')
     else:
         profile_form = ProfileForm(instance=profile)
+
     return render(request, 'app_auth/registration/profile_change.html', {'profile_form': profile_form})
 
 

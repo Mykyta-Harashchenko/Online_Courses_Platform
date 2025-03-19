@@ -21,3 +21,9 @@ class Warrior(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+
+class Comment(models.Model):
+    warrior = models.ForeignKey(Warrior, on_delete=models.CASCADE, null=False)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)

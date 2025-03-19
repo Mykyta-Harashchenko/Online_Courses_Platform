@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import ImageField, FileInput
 
-from .models import Warrior
+from .models import Warrior, Comment
+
 
 class WarriorForm(forms.ModelForm):
     avatar = ImageField(widget=FileInput())
@@ -16,3 +17,8 @@ class WarriorForm(forms.ModelForm):
                   'wound_date',
                   'sum_amount',
                   'avatar']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment']

@@ -4,80 +4,69 @@
 
 {% block content %}
     <div class="container">
-        <h2 class="text-center my-4">Welcome to the Home Page!</h2>
-
-        {% if user.is_authenticated %}
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <p class="mb-0">Hello, <strong>{{ user.username }}</strong>!</p>
-                <div>
-                    <form method="POST" action="{% url 'app_auth:logout' %}" class="d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Logout</button>
-                    </form>
-                    <a href="{% url 'app_auth:profile' %}" class="btn btn-danger">Profile</a>
-                    <a href="{% url 'warrior:add_warrior' %}" class="btn btn-danger">Add Warrior</a>
-                </div>
-            </div>
-        {% else %}
-          <div class="text-center mb-4">
-            <a class="btn btn-outline-primary me-2" href="{% url 'app_auth:register' %}">Sign Up</a>
-            <a class="btn btn-outline-primary" href="{% url 'app_auth:signin' %}">Login</a>
-          </div>
-        {% endif %}
+        <h2 class="text-center my-4 page-title">Warriors waiting for your help!</h2>
 
         <!-- Список воинов -->
         <div class="row">
-    {% for warrior in warriors %}
-    <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card shadow-sm border-0">
-            <div class="card-body text-center">
-                <!-- Отображение аватара -->
-                {% if warrior.avatar %}
-                    <img src="{{ warrior.avatar.url }}" alt="{{ warrior.first_name }} {{ warrior.last_name }}" class="rounded-circle mb-3" width="80" height="80">
-                {% else %}
-                    <img src="/media/default_avatar.png" alt="Default Avatar" class="rounded-circle mb-3" width="80" height="80">
-                {% endif %}
-
-                <h5 class="card-title mb-1">{{ warrior.first_name }} {{ warrior.last_name }}</h5>
-                <p class="text-muted mb-2">by {{ warrior.user.username }}</p>
-
-                <!-- Биография -->
-                <p class="text-dark"><strong>War nik:</strong> {{ warrior.war_nik }}</p>
-
-                <!-- Навыки -->
-                <p class="text-dark"><strong>Wound type:</strong> {{ warrior.wound_type }}</p>
-
-                <!-- Опыт -->
-                <p class="text-dark"><strong>Wound case:</strong> {{ warrior.wound_case }}</p>
-                <a href="/warrior/{{ warrior.id }}" class = "btn btn-danger" >(about)</a>
-            </div>
+            {% for warrior in warriors %}
+                <div class="col-md-6 col-lg-4 mb-4 fade-in">
+                    <div class="warrior-card" onclick="window.location.href='/warrior/{{ warrior.id }}'" style="cursor: pointer;">
+                        <div class="warrior-avatar">
+                            {% if warrior.avatar %}
+                                <img src="{{ warrior.avatar.url }}" alt="{{ warrior.first_name }} {{ warrior.last_name }}">
+                            {% else %}
+                                <img src="/media/default_avatar.png" alt="Default Avatar">
+                            {% endif %}
+                        </div>
+                        <div class="warrior-info">
+                            <h5>{{ warrior.first_name }} {{ warrior.last_name }}</h5>
+                            <p class="text-muted">by {{ warrior.user.username }}</p>
+                            <p><strong>War nik:</strong> {{ warrior.war_nik }}</p>
+                            <p><strong>Wound type:</strong> {{ warrior.wound_type }}</p>
+                            <p><strong>Wound case:</strong> {{ warrior.wound_case }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    </div>
-    {% endfor %}
-</div>
-
 
         <!-- Пагинация -->
         {% if warriors.has_other_pages %}
-        <nav class="mt-4">
-            <ul class="pagination justify-content-center">
-                {% if warriors.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="{% url 'warrior:root_paginate' warriors.previous_page_number %}">← Previous</a>
-                    </li>
-                {% else %}
-                    <li class="page-item disabled"><span class="page-link">← Previous</span></li>
-                {% endif %}
-
-                {% if warriors.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="{% url 'warrior:root_paginate' warriors.next_page_number %}">Next →</a>
-                    </li>
-                {% else %}
-                    <li class="page-item disabled"><span class="page-link">Next →</span></li>
-                {% endif %}
-            </ul>
-        </nav>
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if warriors.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'warrior:root_paginate' warriors.previous_page_number %}">← Previous</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">← Previous</span></li>
+                    {% endif %}
+                    {% if warriors.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'warrior:root_paginate' warriors.next_page_number %}">Next →</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">Next →</span></li>
+                    {% endif %}
+                </ul>
+            </nav>
         {% endif %}
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let elements = document.querySelectorAll(".fade-in");
+            function reveal() {
+                elements.forEach((el) => {
+                    let windowHeight = window.innerHeight;
+                    let elementTop = el.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - 100) {
+                        el.classList.add("show");
+                    }
+                });
+            }
+            window.addEventListener("scroll", reveal);
+            reveal();
+        });
+    </script>
 {% endblock %}
