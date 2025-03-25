@@ -1,40 +1,73 @@
 {% extends "app_auth/base.html" %}
 
 {% block content %}
-
 <div class="container mt-5">
     <div class="text-center">
         <h1 class="mb-4">Profile: {{ user.username }}</h1>
 
-        <!-- Проверка наличия аватара -->
-        {% if user.profile.avatar %}
-            <img src="{{ user.profile.avatar.url }}" alt="User Avatar" class="rounded-circle shadow" width="150" height="150">
-        {% else %}
-            <img src="https://via.placeholder.com/150" alt="Default Avatar" class="rounded-circle shadow">
-        {% endif %}
+        <!-- Блок аватара -->
+        <div class="avatar-container">
+            {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="User Avatar" class="profile-avatar">
+            {% else %}
+                <img src="https://via.placeholder.com/150" alt="Default Avatar" class="profile-avatar">
+            {% endif %}
+        </div>
     </div>
 
     <!-- Форма обновления профиля -->
-    <form method="post" enctype="multipart/form-data" class="mt-4">
+    <form method="post" enctype="multipart/form-data" class="mt-4 p-4 shadow-sm rounded bg-light">
         {% csrf_token %}
 
         <div class="mb-3">
-            <label class="form-label">Change Avatar:</label>
+            <label class="form-label"><strong>Change Avatar:</strong></label>
             {{ profile_form.avatar.as_widget }}
-            <div class="text-danger">{{ profile_form.errors.avatar }}</div>
+            {% if profile_form.errors.avatar %}
+                <div class="text-danger mt-2">{{ profile_form.errors.avatar }}</div>
+            {% endif %}
         </div>
 
-        <!-- Вывод ошибок формы -->
+        <!-- Вывод всех ошибок -->
         {% if profile_form.errors %}
             <div class="alert alert-danger">
-                {{ profile_form.errors }}
+                <ul>
+                    {% for field, errors in profile_form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
             </div>
         {% endif %}
 
-        <button type="submit" class="btn btn-danger">Save Changes</button>
-        <button type="reset" class="btn btn-danger">Reset</button>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">Save Changes</button>
+            <button type="reset" class="btn btn-outline-danger">Reset</button>
+        </div>
     </form>
 </div>
 
-{% endblock %}
+<!-- Стили -->
+<style>
+    .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 0;
+    }
 
+    .profile-avatar.loaded {
+        opacity: 1;
+    }
+</style>
+
+<!-- Скрипт плавного появления аватара -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector(".profile-avatar").classList.add("loaded");
+    });
+</script>
+
+{% endblock %}

@@ -1,39 +1,51 @@
 {% extends 'app_auth/base.html' %}
 
 {% block content %}
-<div class="container mt-3">
-    <h2>Login User</h2>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-4 shadow-lg fade-in" style="width: 100%; max-width: 400px;">
+        <h2 class="text-center mb-3">🔐 Login</h2>
 
-    {% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-        <span {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</span>
-        {% endfor %}
-    </div>
-    {% endif %}
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-    {% if form.errors and form.non_field_errors %}
-    <div class="alert alert-danger" role="alert">
-        {{form.non_field_errors}}
-    </div>
-    {% endif %}
+        {% if form.errors and form.non_field_errors %}
+            <div class="alert alert-danger text-center" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
 
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label class="form-label">Username
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Username</label>
                 {{ form.username }}
-            </label>
-            <span>{{form.errors.username}}</span>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Password
+                <div class="text-danger small">{{ form.errors.username }}</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
                 {{ form.password }}
-            </label>
-            <span>{{form.errors.password}}</span>
+                <div class="text-danger small">{{ form.errors.password }}</div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="{% url 'app_auth:password_reset' %}" class="text-decoration-none">Forgot your password?</a>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <p><a href="{% url 'app_auth:password_reset' %}">Forgot your password?</a></p>
-    </form>
+    </div>
 </div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+            document.querySelector(".fade-in").classList.add("show");
+        }, 100);
+    });
+</script>
 {% endblock %}

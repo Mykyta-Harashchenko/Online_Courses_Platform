@@ -4,26 +4,26 @@
 
 {% block content %}
     <div class="container">
-        <h2 class="text-center my-4 page-title">Warriors waiting for your help!</h2>
+        <h2 class="text-center my-4 page-title">🛡️ Warriors Waiting for Your Help!</h2>
 
         <!-- Список воинов -->
-        <div class="row">
+        <div class="row justify-content-center">
             {% for warrior in warriors %}
                 <div class="col-md-6 col-lg-4 mb-4 fade-in">
-                    <div class="warrior-card" onclick="window.location.href='/warrior/{{ warrior.id }}'" style="cursor: pointer;">
-                        <div class="warrior-avatar">
+                    <div class="warrior-card p-3 shadow-sm" onclick="window.location.href='/warrior/{{ warrior.id }}'" style="cursor: pointer;">
+                        <div class="warrior-avatar text-center">
                             {% if warrior.avatar %}
-                                <img src="{{ warrior.avatar.url }}" alt="{{ warrior.first_name }} {{ warrior.last_name }}">
+                                <img src="{{ warrior.avatar.url }}" class="img-fluid rounded-circle shadow" alt="{{ warrior.first_name }} {{ warrior.last_name }}">
                             {% else %}
-                                <img src="/media/default_avatar.png" alt="Default Avatar">
+                                <img src="/media/default_avatar.png" class="img-fluid rounded-circle shadow" alt="Default Avatar">
                             {% endif %}
                         </div>
-                        <div class="warrior-info">
-                            <h5>{{ warrior.first_name }} {{ warrior.last_name }}</h5>
-                            <p class="text-muted">by {{ warrior.user.username }}</p>
-                            <p><strong>War nik:</strong> {{ warrior.war_nik }}</p>
-                            <p><strong>Wound type:</strong> {{ warrior.wound_type }}</p>
-                            <p><strong>Wound case:</strong> {{ warrior.wound_case }}</p>
+                        <div class="warrior-info mt-3 text-center">
+                            <h5 class="fw-bold">{{ warrior.first_name }} {{ warrior.last_name }}</h5>
+                            <p class="text-muted">by <span class="fw-semibold">{{ warrior.user.username }}</span></p>
+                            <p><strong>War Nick:</strong> {{ warrior.war_nik }}</p>
+                            <p><strong>Wound Type:</strong> {{ warrior.wound_type }}</p>
+                            <p><strong>Wound Case:</strong> {{ warrior.wound_case }}</p>
                         </div>
                     </div>
                 </div>
@@ -36,14 +36,14 @@
                 <ul class="pagination justify-content-center">
                     {% if warriors.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="{% url 'warrior:root_paginate' warriors.previous_page_number %}">← Previous</a>
+                            <a class="page-link bg-dark text-light border-0 shadow-sm" href="{% url 'warrior:root_paginate' warriors.previous_page_number %}">← Previous</a>
                         </li>
                     {% else %}
                         <li class="page-item disabled"><span class="page-link">← Previous</span></li>
                     {% endif %}
                     {% if warriors.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="{% url 'warrior:root_paginate' warriors.next_page_number %}">Next →</a>
+                            <a class="page-link bg-dark text-light border-0 shadow-sm" href="{% url 'warrior:root_paginate' warriors.next_page_number %}">Next →</a>
                         </li>
                     {% else %}
                         <li class="page-item disabled"><span class="page-link">Next →</span></li>

@@ -1,3 +1,4 @@
+/* Сброс стилей */
 * {
     margin: 0;
     padding: 0;
@@ -7,184 +8,143 @@
 /* Основные стили */
 body {
     font-family: 'Poppins', Arial, sans-serif;
-    line-height: 1.8;
-    background-color: linear-gradient(to bottom right, #ff4500, #ff8c00);
+    background: #2A2A2A;
     color: #ffffff;
     text-align: center;
+    line-height: 1.6;
 }
-text-muted{
-    color: #757575;
-    font-size: 1.2rem;
+
+
+/* Навигация */
+.navbar {
+    background: linear-gradient(135deg, #e65100, #ffcc80);
+    transition: background 0.3s ease-in-out;
 }
-/* Шапка сайта */
-header {
-    background:
-        linear-gradient(to bottom right, #ff4500, #ff8c00);
-    color: #ffffff;
-    padding: 25px 0;
-    text-align: center;
+
+.navbar-brand {
     font-size: 1.8rem;
     font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
 }
 
-
-.fade-in {
-     opacity: 0;
-     transform: translateY(20px);
-     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+.navbar-brand:hover {
+    transform: scale(1.1);
 }
 
-.fade-in.show {
-     opacity: 1;
-     transform: translateY(0);
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-}
-
-nav ul li {
-    display: inline;
-    margin-right: 20px;
-}
-
-nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
+.nav-link {
     font-size: 1.2rem;
-    transition: color 0.3s ease;
+    transition: color 0.3s;
 }
 
-nav ul li a:hover {
-    color: #ffccbc;
-    text-decoration: underline;
+.nav-link:hover {
+    color: #ffccbc !important;
 }
 
 /* Основной контент */
 main {
-    padding: 30px;
-    max-width: 100%;
-    margin: 30px auto;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
+    padding: 40px 20px;
 }
 
-/* Подвал */
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background: linear-gradient(to bottom right, #ff4500, #ff8c00);
-    color: #ffffff;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
-/* Кнопки */
-button {
-    background: #d32f2f;
-    color: #ffffff;
-    border: none;
-    padding: 12px 20px;
-    cursor: pointer;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-    background: #ff5252;
-    transform: scale(1.05);
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    main {
-        padding: 20px;
-        width: 100%;
-    }
-
-    nav ul li {
-        display: block;
-        margin: 10px 0;
-    }
-}
-body {
-    background-color: #121212;
-    color: white;
-    font-family: Arial, sans-serif;
-}
-
-.page-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #f8f9fa;
-}
-
-.user-panel p {
-    color: #ddd;
-}
-
-.btn-primary {
-    background-color: #ff4500;
-    border-color: #ff4500;
-}
-
-.btn-primary:hover {
-    background-color: #e03d00;
-    border-color: #e03d00;
-}
-
-.btn-secondary {
-    background-color: #1f1f1f;
-    border: none;
-    color: #fff;
-}
-
-.btn-secondary:hover {
-    background-color: #333;
-}
-
+/* Карточки воинов */
 .warrior-card {
     background: #222;
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(255, 69, 0, 0.2);
 }
 
 .warrior-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(255, 69, 0, 0.4);
+    box-shadow: 0 6px 15px rgba(255, 69, 0, 0.4);
 }
 
 .warrior-avatar img {
     width: 160px;
     height: 160px;
     border-radius: 50%;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    border: 3px solid #ff4500;
 }
 
 .warrior-info h5 {
     color: #ff4500;
+    font-size: 1.3rem;
 }
 
+/* Кнопки */
+.btn-primary {
+    background: #ff4500;
+    border: none;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover {
+    background: #e03d00;
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background: #1f1f1f;
+    border: none;
+    color: #fff;
+    transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #333;
+}
+
+/* Футер */
+footer {
+    background: linear-gradient(135deg, #e65100, #ffcc80);
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+/* Социальные иконки */
+.social-icons a {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #17a2b8;
+}
+
+/* Анимация появления */
 .fade-in {
     opacity: 0;
-    transition: opacity 0.8s ease-in-out;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
 }
 
 .fade-in.show {
     opacity: 1;
+    transform: translateY(0);
 }
-.name-tag-text{
 
+/* Адаптивность */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .nav-item {
+        margin: 10px 0;
+    }
+
+    .warrior-card {
+        padding: 20px;
+    }
 }
